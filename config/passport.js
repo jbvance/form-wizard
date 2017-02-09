@@ -1,13 +1,10 @@
 const _ = require('lodash');
 const passport = require('passport');
 const request = require('request');
-const InstagramStrategy = require('passport-instagram').Strategy;
+//const InstagramStrategy = require('passport-instagram').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
-const TwitterStrategy = require('passport-twitter').Strategy;
-const GitHubStrategy = require('passport-github').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const OpenIDStrategy = require('passport-openid').Strategy;
 const OAuthStrategy = require('passport-oauth').OAuthStrategy;
 const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
@@ -120,7 +117,7 @@ passport.use(new FacebookStrategy({
 
 /**
  * Sign in with GitHub.
- */
+
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_ID,
   clientSecret: process.env.GITHUB_SECRET,
@@ -176,9 +173,10 @@ passport.use(new GitHubStrategy({
     });
   }
 }));
+*/
 
 // Sign in with Twitter.
-
+/*
 passport.use(new TwitterStrategy({
   consumerKey: process.env.TWITTER_KEY,
   consumerSecret: process.env.TWITTER_SECRET,
@@ -229,6 +227,7 @@ passport.use(new TwitterStrategy({
     });
   }
 }));
+*/
 
 /**
  * Sign in with Google.
@@ -290,7 +289,7 @@ passport.use(new GoogleStrategy({
 
 /**
  * Sign in with LinkedIn.
- */
+
 passport.use(new LinkedInStrategy({
   clientID: process.env.LINKEDIN_ID,
   clientSecret: process.env.LINKEDIN_SECRET,
@@ -349,10 +348,12 @@ passport.use(new LinkedInStrategy({
     });
   }
 }));
+*/
+
 
 /**
  * Sign in with Instagram.
- */
+
 passport.use(new InstagramStrategy({
   clientID: process.env.INSTAGRAM_ID,
   clientSecret: process.env.INSTAGRAM_SECRET,
@@ -402,6 +403,7 @@ passport.use(new InstagramStrategy({
     });
   }
 }));
+*/
 
 /**
  * Tumblr API OAuth.
