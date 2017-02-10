@@ -1,0 +1,42 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 Tell us about yourself
+
+  form.form-horizontal(action='/wizard/start', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      .col-md-12
+        .form-group.row
+          .col-md-4
+            input.form-control(type='text', name='firstName', id='firstName', placeholder='First Name', value= inputData ? inputData.firstName : user.wizardProfile.firstName)
+          .col-md-4
+            input.form-control(type='text', name='middleName', id='middleName', placeholder='Middle Name (if any)', value= inputData ? inputData.middleName : user.wizardProfile.middleName)
+          .col-md-4
+            input.form-control(type='text', name='lastName', id='lastName', placeholder='Last Name', value= inputData ? inputData.lastName : user.wizardProfile.lastName)
+    .form-group
+      .col-md-12
+        input.form-control(type='text', name='address', id='address' placeholder='Address', value= inputData ? inputData.address : user.wizardProfile.address)
+
+    .form-group
+      .col-md-12
+        .form-group.row
+          .col-md-4
+            input.form-control(type='text', name='city', id='city', placeholder='City', value= inputData ? inputData.city : user.wizardProfile.city)
+          .col-md-2
+            input.form-control(type='text', name='state', id='state', placeholder='State', value= inputData ? inputData.state : user.wizardProfile.state)
+          .col-md-2
+            input.form-control(type='text', name='zip', id='zip', placeholder='Zip', value= inputData ? inputData.zip : user.wizardProfile.zip)
+
+    .form-group
+      .col-md-12
+        .form-group.row
+          .col-md-4
+            input.form-control(type='text', name='county', id='county', placeholder='In what Texas County do you reside?', value= inputData ? inputData.county : user.wizardProfile.county)
+
+    .form-group
+      .col-sm-2
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-arrow-circle-o-right
+          | Next

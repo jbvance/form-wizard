@@ -19,6 +19,7 @@ const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
+const wizardRouter = require("./routes/wizard_router");
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
@@ -118,6 +119,10 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 /**
  * Primary app routes.
  */
+
+ //Wizard Router
+app.use("/wizard", wizardRouter);
+
 app.get('/', homeController.index);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);

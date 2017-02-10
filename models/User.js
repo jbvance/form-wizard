@@ -23,6 +23,16 @@ const userSchema = new mongoose.Schema({
     location: String,
     website: String,
     picture: String
+  },
+
+  wizardProfile: {
+    firstName: String,
+    middleName: String,
+    lastName: String,
+    address: String,
+    city: String,
+    state: String,
+    zip: String
   }
 }, { timestamps: true });
 
