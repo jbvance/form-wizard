@@ -1,5 +1,6 @@
 const passport = require('passport');
 const User = require('../models/User');
+const userController = require('../controllers/user.js');
 
 exports.getStart = (req, res) => {
   var inputData = null;
@@ -14,7 +15,7 @@ exports.getStart = (req, res) => {
 };
 
 exports.postStart = (req, res, next) => {
-  req.assert('firstName', 'First Name should be at least 5 characters').len(5);
+  req.assert('firstName', 'First Name is required').notEmpty();
   req.assert('lastName', 'Last Name is required').notEmpty();
   req.assert('address', 'Address is required').notEmpty();
   req.assert('city', 'City is required').notEmpty();
@@ -43,4 +44,9 @@ exports.postStart = (req, res, next) => {
     return res.redirect('/wizard/start');
   }
 
-}
+  //Save data to user.wizardProfile
+  else {
+    userController.createWizardProfile(req, res);
+  }
+
+};

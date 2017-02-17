@@ -4,6 +4,15 @@ const nodemailer = require('nodemailer');
 const passport = require('passport');
 const User = require('../models/User');
 
+
+/**
+* Send JSON response function for certain api calls
+*/
+var sendJsonResponse = function(res, status, content) {
+  res.status(status);
+  res.json(content);
+};
+
 /**
  * GET /login
  * Login page.
@@ -179,6 +188,91 @@ exports.postUpdatePassword = (req, res, next) => {
       res.redirect('/account');
     });
   });
+};
+
+/**
+Wizard Profile
+*/
+exports.getWizardProfile = (req, res, next) => {
+  if (req.params && req.params.userid){
+    User.findById(req.params.userid, (err, user) => {
+      if (!user) {
+        sendJsonResponse(res, 404, "No User found with ID: " + req.params.userid);
+      } else if (!user.wizardProfile.length > 0){
+        sendJsonResponse(res, 404, "No Profile found for user with ID: " + req.params.userid + " length = " + user.wizardProfile.length);
+      } else {
+        sendJsonResponse(res, 200, user.wizardProfile);
+      }
+    });
+  } else {
+    return res.status(404).send("No user found - ID is required");
+  }
+};
+
+/**
+Create Wizard Profile if none exists
+*/
+module.exports.createWizardProfile = function(req, res) {
+  var userid = req.user.id; //req.params.userid;
+  console.log("USER ID = " + userid);
+  if (userid) {
+    User
+      .findById(userid)
+      .select('wizardProfile')
+      .exec(
+        function(err, user) {
+          if (err) {
+            sendJsonResponse(res, 400, err);
+          } else {
+            addOrUpdateWizardProfile(req, res, user);
+          }
+        }
+      );
+  } else {
+      sendJsonResponse(res, 404, {
+      "message": "Not found, userid required"
+    });
+  }
+};
+
+var addOrUpdateWizardProfile = function(req, res, user) {
+  if (!user) {
+    sendJsonResponse(res, 404, {
+    "message": "userid not found"
+    });
+  } else if (user.wizardProfile.length > 0){
+      var wp = user.wizardProfile[0];
+      wp.firstName = req.body.firstName;
+      wp.middleName = req.body.middleName;
+      wp.lastName = req.body.lastName;
+      wp.address = req.body.address;
+      wp.city = req.body.city;
+      wp.state = req.body.state;
+      wp.zip = req.body.zip;
+      wp.county = req.body.county;
+  } else {
+    //Add profile since it doesn't exist
+
+      user.wizardProfile.firstName = req.body.firstName;
+      user.wizardProfile.middleName = req.body.middleName;
+      user.wizardProfile.lastName = req.body.lastName;
+      user.wizardProfile.address = req.body.address;
+      user.wizardProfile.city = req.body.city;
+      user.wizardProfile.state = req.body.state;
+      user.wizardProfile.zip = req.body.zip;
+      user.wizardProfile.county = req.body.county;
+
+  }
+    //Save user wizardProfile to db
+    user.save(function(err, user) {
+      var thisProfile;
+      if (err) {
+        sendJsonResponse(res, 400, err);
+      } else {
+        thisProfile = user.wizardProfile;
+        sendJsonResponse(res, 201, thisProfile);
+      }
+    });
 };
 
 /**
