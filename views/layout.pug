@@ -9,9 +9,11 @@ html
     title #{title} - Hackathon Starter
     link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='/css/main.css')
+    link(rel='stylesheet', href='/css/lib/magnific-popup.css')
 
   body
     include partials/header
+    // <a class="popup-vimeo" href="https://vimeo.com/45830194" >Open Vimeo video</a><br/>
 
     .container
       include partials/flash
@@ -22,6 +24,7 @@ html
     script(src='/js/lib/jquery-2-2-4.min.js')
     script(src='/js/lib/bootstrap.min.js')
     script(src='/js/main.js')
+    script(src='/js/lib/magnific-popup/jquery.magnific-popup.js')
 
     // Google Analytics: change UA-XXXXX-X to be your site's ID
     script.
