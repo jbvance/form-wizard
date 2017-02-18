@@ -33,7 +33,11 @@ const userSchema = new mongoose.Schema({
     city: String,
     state: String,
     zip: String,
-    county: String
+    county: String,
+    maritalStatus: String,
+    children: [{
+      name: String
+    }]
   }
 }, { timestamps: true });
 
